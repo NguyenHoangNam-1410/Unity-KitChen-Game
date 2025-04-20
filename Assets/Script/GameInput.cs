@@ -7,11 +7,18 @@ public class GameInput : MonoBehaviour
     private PlayerInputAction playerInputAction;
 
     public event EventHandler OnInteractAction;
+    public event EventHandler OnInteractAlternateAction;
     private void Awake()
     {
         playerInputAction = new PlayerInputAction();
         playerInputAction.Player.Enable();
         playerInputAction.Player.Interact.performed += Interact_performed;
+        playerInputAction.Player.InteractAlternate.performed += InteractAlternate_performed;
+    }
+
+    private void InteractAlternate_performed(InputAction.CallbackContext context)
+    {
+        OnInteractAlternateAction?.Invoke(this, EventArgs.Empty);
     }
 
     private void Interact_performed(InputAction.CallbackContext context)
